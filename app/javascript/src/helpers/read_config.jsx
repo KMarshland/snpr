@@ -12,6 +12,11 @@ export default function readConfig(store) {
             type: 'SET_SOURCES',
             sources: window.sources
         });
+
+        store.dispatch({
+            type: 'SET_SOURCE',
+            source: window.source
+        });
     })();
 
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import DocumentSummaryRow from "./document_summary_row";
+import SummaryRow from "../helpers/summary_row";
 
 export default class DocumentSummary extends React.PureComponent {
 
@@ -11,15 +11,18 @@ export default class DocumentSummary extends React.PureComponent {
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
-                    <DocumentSummaryRow
+                    <SummaryRow
                         label="Source"
-                        value={source.get('name')}
-                    />
-                    <DocumentSummaryRow
+                    >
+                        <a href={'/sources/' + source.get('id')}>{source.get('name')}</a>
+                    </SummaryRow>
+
+                    <SummaryRow
                         label="File URL"
-                        value={this.props.document.get('file_url')}
-                    />
-                    <DocumentSummaryRow
+                    >
+                        <a href={this.props.document.get('file_url')} target="_blank">{this.props.document.get('file_url')}</a>
+                    </SummaryRow>
+                    <SummaryRow
                         label="External ID"
                         value={this.props.document.get('external_id')}
                     />

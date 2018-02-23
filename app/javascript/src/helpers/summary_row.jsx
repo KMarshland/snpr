@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default class DocumentSummaryRow extends React.PureComponent {
+export default class SummaryRow extends React.PureComponent {
 
     render() {
         return (
@@ -11,6 +11,7 @@ export default class DocumentSummaryRow extends React.PureComponent {
                 </div>
                 <div className="col-sm-10 text-bold">
                     {this.props.value}
+                    {this.props.children}
                 </div>
             </div>
         )
@@ -18,11 +19,8 @@ export default class DocumentSummaryRow extends React.PureComponent {
 
 }
 
-DocumentSummaryRow.propTypes = {
+SummaryRow.propTypes = {
     label: PropTypes.string.isRequired,
-    value: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string
-    ]).isRequired
+    value: PropTypes.any
 };
 

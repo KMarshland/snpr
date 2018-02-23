@@ -8,11 +8,13 @@ import readConfig from './helpers/read_config'
 
 import DocumentShowPage from "./documents/document_show_page";
 import SourcesIndexPage from "./sources/sources_index_page";
+import SourcesShowPage from "./sources/sources_show_page";
 
 
 let pages = {
     'document-show': DocumentShowPage,
-    'source-index': SourcesIndexPage
+    'source-index': SourcesIndexPage,
+    'source-show': SourcesShowPage
 };
 
 document.addEventListener('turbolinks:load', () => {
