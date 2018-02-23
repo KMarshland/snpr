@@ -61,7 +61,32 @@ class Document < ApplicationRecord
     total_lines = lines.count
     start_time = DateTime.now
 
-    snp_ids = []
+    snp_ids = Set.new
+    existing_snps = SnpsSource.where(source_id: self.source_id).pluck(:snp_id).to_set
+    rsids = Snp.pluck(:rsid, :id).to_h
+
+    to_create = []
+
+    flush = -> {
+
+      snp_ids += Snp.create(to_create).map(&:id)
+
+      to_create = []
+
+      snp_ids -= existing_snps
+
+      SnpsSource.create(snp_ids.map{|snp_id|
+        {
+            snp_id: snp_id,
+            source_id: self.source_id
+        }
+      })
+
+      snp_ids = Set.new
+    }
+
+    batch_size = 10000
+    debug_size = batch_size
 
     lines.each do |line|
       next if line.blank?
@@ -83,30 +108,36 @@ class Document < ApplicationRecord
 
       params = header.zip(data).to_h.slice(*whitelist)
 
-      snp = Snp.where(rsid: params['rsid']).first_or_create do |snp|
-        params.each do |key, value|
-          snp.send("#{key}=", value)
-        end
+      id = rsids[params['rsid']]
 
-        created += 1
+      if id
+        snp_ids << id
+      else
+        to_create << params
       end
-
-      snp.sources += [self.source]
 
       checked += 1
 
-      if checked % 1000 == 0
+      if checked % debug_size == 0
         amount_done = checked/total_lines.to_f
         percent_done = (100 * amount_done).round(2)
 
         time_elapsed = ((DateTime.now - start_time).to_f * 1.day).round(2)
-        time_remaining = (time_elapsed / amount_done - time_elapsed).round(2)
+        time_remaining = (time_elapsed / amount_done - time_elapsed)
+        eta = DateTime.now + time_remaining.seconds
 
-        puts "\tDocument ID #{self.id}: ~#{percent_done}% done (#{time_elapsed}s elapsed, ~#{time_remaining}s remaining)"
+        puts "\tDocument ID #{self.id}: ~#{percent_done}% done (#{time_elapsed}s elapsed, ETA #{eta.strftime('%-I:%M:%S %P')})"
+      end
+
+      if checked % batch_size == 0
+        flush[]
       end
     end
 
-    puts "Processed document ID #{self.id}: #{created} new SNPs created (#{checked} in document, #{total_lines} lines)"
+    flush[]
+
+    time_elapsed = ((DateTime.now - start_time).to_f * 1.day).round(2)
+    puts "Processed document ID #{self.id}: #{created} new SNPs created (#{checked} in document, #{total_lines} lines, #{time_elapsed}s elapsed)"
 
     self.update(imported: true)
   end

@@ -15,8 +15,7 @@
 #
 # Indexes
 #
-#  index_snps_on_checked_gwas  (checked_gwas)
-#  index_snps_on_rsid          (rsid) UNIQUE
+#  index_snps_on_rsid  (rsid) UNIQUE
 #
 
 require 'test_helper'
