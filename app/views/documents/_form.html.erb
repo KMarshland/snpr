@@ -1,0 +1,27 @@
+<%= form_with(model: document, local: true) do |form| %>
+  <% if document.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
+
+      <ul>
+      <% document.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label 'External ID' %>
+    <%= form.text_field :external_id, id: :document_external_id, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :source %>
+    <%= form.select :source, options_for_select(Document.sources, document.source), {}, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit nil, class: 'btn btn-default' %>
+  </div>
+<% end %>

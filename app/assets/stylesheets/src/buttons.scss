@@ -1,0 +1,13 @@
+@import "colors";
+
+.btn.btn-default {
+  background-color: $secondary-color;
+  color: white;
+
+  border-color: $tertiary-color;
+}
+
+.btn.btn-default:hover {
+  color: white;
+  background-color: darken($secondary-color, 10%);
+}
