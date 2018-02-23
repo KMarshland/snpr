@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Snpr</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>SNPR</title>
+  <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
-    <%= javascript_pack_tag 'application' %>
-  </head>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
+  <%= javascript_pack_tag 'application' %>
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body>
+<div id="wrapper">
+  <div id="menu-wrapper">
+    <div id="menu" class="container">
+      <ul>
+        <%= menu_item 'Home', '/' %>
+      </ul>
+    </div>
+
+  </div>
+  <div id="page" class="container">
+    <div id="content">
+      <%= yield %>
+    </div>
+  </div>
+</div>
+
+<footer id="footer"></footer>
+
+</body>
 </html>
