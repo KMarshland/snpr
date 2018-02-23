@@ -22,14 +22,14 @@ module GWAS
       response = HTTP.get url
 
       if response.code.to_i == 404
-        raise NotFoundError.new(url)
+        return nil
       end
 
       unless response.code.to_i == 200
         raise BadRequestError.new(url)
       end
 
-      response.as_json
+      JSON(response.body.to_s)
     end
 
   end

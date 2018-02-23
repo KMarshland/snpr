@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223025859) do
+ActiveRecord::Schema.define(version: 20180223030930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,29 @@ ActiveRecord::Schema.define(version: 20180223025859) do
     t.index ["source_id"], name: "index_documents_on_source_id"
   end
 
+  create_table "genomic_contexts", force: :cascade do |t|
+    t.bigint "snp_id"
+    t.string "gene"
+    t.integer "distance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["snp_id"], name: "index_genomic_contexts_on_snp_id"
+  end
+
+  create_table "snps", force: :cascade do |t|
+    t.string "rsid"
+    t.string "chromosome"
+    t.integer "position"
+    t.string "allele1"
+    t.string "allele2"
+    t.boolean "checked_gwas"
+    t.string "functional_class"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checked_gwas"], name: "index_snps_on_checked_gwas"
+    t.index ["rsid"], name: "index_snps_on_rsid", unique: true
+  end
+
   create_table "sources", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -32,4 +55,5 @@ ActiveRecord::Schema.define(version: 20180223025859) do
   end
 
   add_foreign_key "documents", "sources"
+  add_foreign_key "genomic_contexts", "snps"
 end
