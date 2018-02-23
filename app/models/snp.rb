@@ -23,7 +23,8 @@ require Rails.root.join('lib', 'gwas', 'gwas.rb')
 
 class Snp < ApplicationRecord
 
-  has_many :genomic_contexts
+  has_many :genomic_contexts, dependent: :destroy
+  has_and_belongs_to_many :sources
 
   validates :rsid, presence: true
 

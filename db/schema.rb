@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223030930) do
+ActiveRecord::Schema.define(version: 20180223032408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 20180223030930) do
     t.datetime "updated_at", null: false
     t.index ["checked_gwas"], name: "index_snps_on_checked_gwas"
     t.index ["rsid"], name: "index_snps_on_rsid", unique: true
+  end
+
+  create_table "snps_sources", id: false, force: :cascade do |t|
+    t.bigint "snp_id", null: false
+    t.bigint "source_id", null: false
+    t.index ["snp_id", "source_id"], name: "index_snps_sources_on_snp_id_and_source_id"
+    t.index ["source_id", "snp_id"], name: "index_snps_sources_on_source_id_and_snp_id"
   end
 
   create_table "sources", force: :cascade do |t|

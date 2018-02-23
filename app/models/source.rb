@@ -15,6 +15,7 @@
 class Source < ApplicationRecord
 
   has_many :documents
+  has_and_belongs_to_many :snps
 
   validates :name, presence: true, uniqueness: true
 
