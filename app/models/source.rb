@@ -34,4 +34,12 @@ class Source < ApplicationRecord
     self.name
   end
 
+  def as_json(_opts={})
+    {
+        id: self.id,
+        name: self.name,
+        snps: SnpsSource.where(source_id: self.id).count
+    }
+  end
+
 end

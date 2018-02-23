@@ -156,7 +156,7 @@ class Document < ApplicationRecord
   def as_json(_opts={})
     {
         id: self.id,
-        source: self.source.to_s,
+        source_id: self.source_id,
         file_url: self.file_url,
         external_id: self.external_id,
         imported: self.imported

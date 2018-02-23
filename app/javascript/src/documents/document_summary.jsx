@@ -6,12 +6,14 @@ import DocumentSummaryRow from "./document_summary_row";
 export default class DocumentSummary extends React.PureComponent {
 
     render() {
+        const source = this.props.sources.get(this.props.document.get('source_id'));
+
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
                     <DocumentSummaryRow
                         label="Source"
-                        value={this.props.document.get('source')}
+                        value={source.get('name')}
                     />
                     <DocumentSummaryRow
                         label="File URL"
@@ -29,6 +31,7 @@ export default class DocumentSummary extends React.PureComponent {
 }
 
 DocumentSummary.propTypes = {
-    document: PropTypes.instanceOf(Immutable.Map).isRequired
+    document: PropTypes.instanceOf(Immutable.Map).isRequired,
+    sources: PropTypes.instanceOf(Immutable.OrderedMap).isRequired
 };
 

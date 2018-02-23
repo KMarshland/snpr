@@ -10,7 +10,7 @@ export default class DocumentShowPage extends React.PureComponent {
     render() {
         return (
             <div>
-                <DocumentSummary document={this.props.document}/>
+                <DocumentSummary document={this.props.document} sources={this.props.sources} />
 
                 {
                     !this.props.document.get('imported') &&
@@ -23,6 +23,7 @@ export default class DocumentShowPage extends React.PureComponent {
 }
 
 DocumentShowPage.propTypes = {
-    document: PropTypes.instanceOf(Immutable.Map).isRequired
+    document: PropTypes.instanceOf(Immutable.Map).isRequired,
+    sources: PropTypes.instanceOf(Immutable.OrderedMap).isRequired
 };
 

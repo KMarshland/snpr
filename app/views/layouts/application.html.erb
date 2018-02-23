@@ -18,6 +18,13 @@
 </head>
 
 <body>
+
+<% if @set_sources %>
+  <script>
+      window.sources = <%= sanitize Source.all.to_json %>;
+  </script>
+<% end %>
+
 <div id="wrapper">
   <div id="menu-wrapper">
     <div id="menu" class="container">
