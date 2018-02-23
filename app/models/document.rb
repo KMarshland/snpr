@@ -2,13 +2,14 @@
 #
 # Table name: documents
 #
-#  id          :integer          not null, primary key
-#  external_id :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  source_id   :integer
-#  file_url    :string
-#  imported    :boolean          default(FALSE)
+#  id                    :integer          not null, primary key
+#  external_id           :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  source_id             :integer
+#  file_url              :string
+#  imported              :boolean          default(FALSE)
+#  processing_start_time :datetime
 #
 # Indexes
 #
@@ -30,6 +31,14 @@ class Document < ApplicationRecord
   validates :file_url, presence: true
 
   def import
+
+    if self.processing_start_time.present? && self.processing_start_time > 1.hour.ago
+      puts "Already processing document ID #{self.id}"
+      return
+    else
+      self.update(processing_start_time: DateTime.now)
+    end
+
     cache_location = Rails.root.join('tmp', 'dataset-' + self.file_url.gsub(/\W/, '-') + '.cached')
 
     if File.exist? cache_location
@@ -69,18 +78,14 @@ class Document < ApplicationRecord
 
     flush = -> {
 
-      snp_ids += Snp.create(to_create).map(&:id)
+      snp_ids += Snp.bulk_insert(to_create)
 
+      created += to_create.length
       to_create = []
 
       snp_ids -= existing_snps
 
-      SnpsSource.create(snp_ids.map{|snp_id|
-        {
-            snp_id: snp_id,
-            source_id: self.source_id
-        }
-      })
+      SnpsSource.bulk_insert(self.source_id, snp_ids)
 
       snp_ids = Set.new
     }
@@ -139,7 +144,13 @@ class Document < ApplicationRecord
     time_elapsed = ((DateTime.now - start_time).to_f * 1.day).round(2)
     puts "Processed document ID #{self.id}: #{created} new SNPs created (#{checked} in document, #{total_lines} lines, #{time_elapsed}s elapsed)"
 
-    self.update(imported: true)
+    self.update(
+        imported: true,
+        processing_start_time: nil
+    )
+  rescue Exception => e
+    self.update(processing_start_time: nil)
+    raise e
   end
 
   def as_json(_opts={})

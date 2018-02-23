@@ -2,13 +2,14 @@
 #
 # Table name: documents
 #
-#  id          :integer          not null, primary key
-#  external_id :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  source_id   :integer
-#  file_url    :string
-#  imported    :boolean          default(FALSE)
+#  id                    :integer          not null, primary key
+#  external_id           :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  source_id             :integer
+#  file_url              :string
+#  imported              :boolean          default(FALSE)
+#  processing_start_time :datetime
 #
 # Indexes
 #

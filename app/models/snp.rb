@@ -62,4 +62,28 @@ class Snp < ApplicationRecord
     )
   end
 
+  def self.bulk_insert(params)
+
+    return [] if params.empty?
+
+    keys = %w(rsid chromosome position)
+
+    now = DateTime.now.to_s
+
+    values = params.map do |param|
+
+      "(#{keys.map{|key|
+        value = param[key]
+
+        "'#{value.gsub(/["'`]/, '')}'"
+      }.join(',')},'#{now}','#{now}')"
+    end
+
+    query = "INSERT INTO snps (#{keys.join(',')},created_at,updated_at) VALUES #{values.join(',')} RETURNING id"
+
+    result = ActiveRecord::Base.connection.execute(query)
+
+    result.values.flatten
+  end
+
 end
