@@ -9,7 +9,7 @@ body {
   padding: 0px;
   background: $primary-color;
   font-family: 'Raleway', sans-serif;
-  font-size: 11pt;
+  font-size: 13pt;
   font-weight: 400;
   color: #363636;
 }
@@ -20,12 +20,17 @@ h1, h2, h3 {
   padding: 0;
 }
 
+h1 {
+  margin-bottom: 10px;
+}
+
 p, ol, ul {
   margin-top: 0px;
 }
 
 p {
-  line-height: 190%;
+  text-align: justify;
+  margin-bottom: 3px;
 }
 
 strong {
@@ -206,11 +211,6 @@ ul.contact li a.icon-rss:before { background: #F2600B; }
 
 #wrapper {
   background: #333333;
-}
-
-.container {
-  width: 1200px;
-  margin: 0px auto;
 }
 
 .clearfix {
