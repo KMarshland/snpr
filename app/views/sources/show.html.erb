@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+
+<div id="react-root" data-page="source-show"></div>
+
+<script>
+    window.source = <%= sanitize @source.to_json %>;
+</script>

@@ -7,10 +7,12 @@ import store from './store'
 import readConfig from './helpers/read_config'
 
 import DocumentShowPage from "./documents/document_show_page";
+import SourcesIndexPage from "./sources/sources_index_page";
 
 
 let pages = {
-    'document-show': DocumentShowPage
+    'document-show': DocumentShowPage,
+    'source-index': SourcesIndexPage
 };
 
 document.addEventListener('turbolinks:load', () => {

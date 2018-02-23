@@ -38,6 +38,7 @@ class Source < ApplicationRecord
     {
         id: self.id,
         name: self.name,
+        documents: self.documents.count,
         snps: SnpsSource.where(source_id: self.id).count
     }
   end

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  resources :sources, only: [:index, :show]
+
   resources :documents
   root 'static#home'
 
