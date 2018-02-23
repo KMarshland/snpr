@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :source %>
-    <%= form.select :source, options_for_select(Document.sources, document.source), {}, class: 'form-control' %>
+    <%= form.select :source, options_for_select(Source.sources, document.source), {}, class: 'form-control' %>
   </div>
 
   <div class="actions">

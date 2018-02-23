@@ -10,18 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223022031) do
+ActiveRecord::Schema.define(version: 20180223025859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "documents", force: :cascade do |t|
     t.string "external_id"
-    t.string "source"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "source_id"
     t.index ["external_id"], name: "index_documents_on_external_id", unique: true
-    t.index ["source"], name: "index_documents_on_source"
+    t.index ["source_id"], name: "index_documents_on_source_id"
   end
 
+  create_table "sources", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_sources_on_name", unique: true
+  end
+
+  add_foreign_key "documents", "sources"
 end
