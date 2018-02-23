@@ -1,14 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>External:</strong>
-  <%= @document.external_id %>
-</p>
+<div id="react-root" data-page="document-show"></div>
 
-<p>
-  <strong>Source:</strong>
-  <%= @document.source %>
-</p>
+<br />
 
-<%= link_to 'Edit', edit_document_path(@document) %> |
 <%= link_to 'Back', documents_path %>
+
+<script>
+  window.backend_document = <%= sanitize @document.to_json %>;
+</script>

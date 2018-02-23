@@ -30,4 +30,8 @@ class Source < ApplicationRecord
   validates :name, inclusion: { in: Source.sources.map(&:to_s),
                                   message: '%<value> is not a valid source' }
 
+  def to_s
+    self.name
+  end
+
 end
