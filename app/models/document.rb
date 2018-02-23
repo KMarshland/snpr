@@ -7,10 +7,13 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  source_id   :integer
+#  file_url    :string
+#  imported    :boolean          default(FALSE)
 #
 # Indexes
 #
 #  index_documents_on_external_id  (external_id) UNIQUE
+#  index_documents_on_imported     (imported)
 #  index_documents_on_source_id    (source_id)
 #
 # Foreign Keys
@@ -24,5 +27,10 @@ class Document < ApplicationRecord
 
   validates :external_id, presence: true, uniqueness: true
   validates :source, presence: true
+  validates :file_url, presence: true
+
+  def import
+
+  end
 
 end

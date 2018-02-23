@@ -6,7 +6,7 @@ class CreateSnps < ActiveRecord::Migration[5.1]
       t.integer :position
       t.string :allele1
       t.string :allele2
-      t.boolean :checked_gwas
+      t.boolean :checked_gwas, default: false
       t.string :functional_class
 
       t.timestamps

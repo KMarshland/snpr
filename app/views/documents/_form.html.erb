@@ -13,7 +13,12 @@
 
   <div class="field">
     <%= form.label 'External ID' %>
-    <%= form.text_field :external_id, id: :document_external_id, class: 'form-control' %>
+    <%= form.text_field :external_id, id: :document_external_id, class: 'form-control', placeholder: '5462' %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'File URL' %>
+    <%= form.text_field :file_url, id: :document_file_url, class: 'form-control', placeholder: 'https://opensnp.org/data/6248.23andme.5462' %>
   </div>
 
   <div class="field">

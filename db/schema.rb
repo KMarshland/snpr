@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223032408) do
+ActiveRecord::Schema.define(version: 20180223033242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,10 @@ ActiveRecord::Schema.define(version: 20180223032408) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "source_id"
+    t.string "file_url"
+    t.boolean "imported", default: false
     t.index ["external_id"], name: "index_documents_on_external_id", unique: true
+    t.index ["imported"], name: "index_documents_on_imported"
     t.index ["source_id"], name: "index_documents_on_source_id"
   end
 
@@ -39,7 +42,7 @@ ActiveRecord::Schema.define(version: 20180223032408) do
     t.integer "position"
     t.string "allele1"
     t.string "allele2"
-    t.boolean "checked_gwas"
+    t.boolean "checked_gwas", default: false
     t.string "functional_class"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

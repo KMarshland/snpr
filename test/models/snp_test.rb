@@ -8,7 +8,7 @@
 #  position         :integer
 #  allele1          :string
 #  allele2          :string
-#  checked_gwas     :boolean
+#  checked_gwas     :boolean          default(FALSE)
 #  functional_class :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
