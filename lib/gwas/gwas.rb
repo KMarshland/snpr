@@ -17,9 +17,17 @@ module GWAS
       make_request "singleNucleotidePolymorphisms/#{rs_id}"
     end
 
-    def make_request(path)
+    def list_efo_traits(size: 250, page: 0)
+      make_request 'efoTraits', params: {page: page, size: size}
+    end
+
+    def snps_with_efo_trait(efo_trait)
+      make_request 'findByEfoTrait', params: {efoTrait: efo_trait}
+    end
+
+    def make_request(path, params: {})
       url = BASE_URL + '/' + path
-      response = HTTP.get url
+      response = HTTP.get url, params: params
 
       if response.code.to_i == 404
         return nil

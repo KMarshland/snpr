@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: diseases
+#
+#  id           :integer          not null, primary key
+#  name         :string
+#  short_form   :string
+#  checked_gwas :boolean          default(FALSE)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+# Indexes
+#
+#  index_diseases_on_short_form  (short_form) UNIQUE
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  short_form: MyString
+  checked_gwas: false
+
+two:
+  name: MyString
+  short_form: MyString
+  checked_gwas: false
