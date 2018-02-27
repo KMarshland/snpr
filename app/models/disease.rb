@@ -27,19 +27,18 @@ class Disease < ApplicationRecord
     snps = response['_embedded']['singleNucleotidePolymorphisms']
 
     snps.map! do |snp|
-      params = {
+      next nil if snp['locations'][0].blank?
+
+      {
           rsid: snp['rsId'],
+          chromosome: snp['locations'][0]['chromosomeName'],
+          position: snp['locations'][0]['chromosomePosition'],
           functional_class: snp['functionalClass'],
           checked_gwas: true
       }.stringify_keys
-
-      if snp['locations'][0].present?
-        params['chromosome'] = snp['locations'][0]['chromosomeName']
-        params['position'] = snp['locations'][0]['chromosomePosition']
-      end
-
-      params
     end
+
+    snps.select!(&:present?)
 
     rsids = snps.map do |snp|
       snp['rsid']
@@ -54,7 +53,7 @@ class Disease < ApplicationRecord
 
     self.update(checked_gwas: true)
 
-    puts "Inserted #{created.count} SNPs (#{ids} linked out of #{snps.count}) for #{self.name} (disease id #{self.id})"
+    puts "Inserted #{created.count} SNPs (#{ids.count} linked out of #{snps.count}) for #{self.name} (disease id #{self.id})"
   rescue Exception => e
     puts "Error on #{self.name} (disease id #{self.id})"
     puts response if defined? response
