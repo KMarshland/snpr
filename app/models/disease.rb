@@ -17,6 +17,49 @@ require Rails.root.join('lib', 'gwas', 'gwas.rb')
 
 class Disease < ApplicationRecord
 
+  has_and_belongs_to_many :snps
+
+  def pull_snps
+    client = GWAS::Client.new
+
+    response = client.snps_with_efo_trait self.name
+
+    snps = response['_embedded']['singleNucleotidePolymorphisms']
+
+    snps.map! do |snp|
+      params = {
+          rsid: snp['rsId'],
+          functional_class: snp['functionalClass'],
+          checked_gwas: true
+      }.stringify_keys
+
+      if snp['locations'][0].present?
+        params['chromosome'] = snp['locations'][0]['chromosomeName']
+        params['position'] = snp['locations'][0]['chromosomePosition']
+      end
+
+      params
+    end
+
+    rsids = snps.map do |snp|
+      snp['rsid']
+    end
+
+    rsids -= self.snps.pluck(:rsid)
+
+    created = Snp.bulk_insert snps, keys: %w(rsid chromosome position functional_class checked_gwas)
+
+    ids = Snp.where(rsid: rsids).pluck(:id)
+    DiseasesSnp.bulk_insert self.id, ids
+
+    self.update(checked_gwas: true)
+
+    puts "Inserted #{created.count} SNPs (#{ids} linked out of #{snps.count}) for #{self.name} (disease id #{self.id})"
+  rescue Exception => e
+    puts "Error on #{self.name} (disease id #{self.id})"
+    puts response if defined? response
+    raise e
+  end
 
   def self.pull_from_gwas
     client = GWAS::Client.new

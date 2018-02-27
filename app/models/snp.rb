@@ -22,6 +22,8 @@ require Rails.root.join('lib', 'gwas', 'gwas.rb')
 
 class Snp < ApplicationRecord
 
+  has_and_belongs_to_many :snps
+
   has_many :genomic_contexts, dependent: :destroy
   has_and_belongs_to_many :sources
 
@@ -62,11 +64,9 @@ class Snp < ApplicationRecord
     )
   end
 
-  def self.bulk_insert(params)
+  def self.bulk_insert(params, keys: %w(rsid chromosome position))
 
     return [] if params.empty?
-
-    keys = %w(rsid chromosome position)
 
     now = DateTime.now.to_s
 
@@ -75,11 +75,11 @@ class Snp < ApplicationRecord
       "(#{keys.map{|key|
         value = param[key]
 
-        "'#{value.gsub(/["'`]/, '')}'"
+        "'#{value.to_s.gsub(/["'`]/, '')}'"
       }.join(',')},'#{now}','#{now}')"
     end
 
-    query = "INSERT INTO snps (#{keys.join(',')},created_at,updated_at) VALUES #{values.join(',')} RETURNING id"
+    query = "INSERT INTO snps (#{keys.join(',')},created_at,updated_at) VALUES #{values.join(',')} ON CONFLICT (rsid) DO NOTHING RETURNING id"
 
     result = ActiveRecord::Base.connection.execute(query)
 

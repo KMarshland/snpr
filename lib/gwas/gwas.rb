@@ -22,7 +22,7 @@ module GWAS
     end
 
     def snps_with_efo_trait(efo_trait)
-      make_request 'findByEfoTrait', params: {efoTrait: efo_trait}
+      make_request 'singleNucleotidePolymorphisms/search/findByEfoTrait', params: {efoTrait: efo_trait}
     end
 
     def make_request(path, params: {})
