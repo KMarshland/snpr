@@ -1,0 +1,2 @@
+web: bundle exec puma -C config/puma.rb
+solr: bundle exec rake sunspot:solr:run

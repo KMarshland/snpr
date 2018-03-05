@@ -19,6 +19,10 @@ class Disease < ApplicationRecord
 
   has_and_belongs_to_many :snps
 
+  searchable do
+    text :name, as: :name_textp
+  end
+
   def pull_snps
     client = GWAS::Client.new
 
