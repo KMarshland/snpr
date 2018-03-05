@@ -30,6 +30,14 @@ class Disease < ApplicationRecord
     }
   end
 
+  def as_short_json
+    {
+        id: self.id,
+        name: self.name,
+        short_form: self.short_form
+    }
+  end
+
   def pull_snps
     client = GWAS::Client.new
 
@@ -126,4 +134,9 @@ class Disease < ApplicationRecord
 
     result.values.flatten
   end
+
+  def self.as_short_json
+    all.map(&:as_short_json)
+  end
+
 end

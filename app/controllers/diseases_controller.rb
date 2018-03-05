@@ -1,7 +1,13 @@
 class DiseasesController < ApplicationController
-  before_action :set_disease
+  before_action :set_disease, only: [:show]
 
   def show
+  end
+
+  def index
+    @diseases = Disease.all
+
+    render json: {diseases: @diseases.as_short_json}
   end
 
   private
