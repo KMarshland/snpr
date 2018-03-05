@@ -19,6 +19,8 @@ class Disease < ApplicationRecord
 
   has_and_belongs_to_many :snps
 
+  has_many :sources, through: :snps
+
   def as_json(opts={})
     {
         id: self.id,
