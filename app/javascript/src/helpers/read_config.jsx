@@ -6,6 +6,13 @@ export default function readConfig(store) {
             document: window.backend_document
         });
     })();
+    
+    (function getDisease() {
+        store.dispatch({
+            type: 'SET_DISEASE',
+            disease: window.disease
+        });
+    })();
 
     (function getSources() {
         store.dispatch({

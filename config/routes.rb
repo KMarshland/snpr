@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'diseases/:short_form' => 'diseases#show'
+
   resources :sources, only: [:index, :show]
 
   resources :documents

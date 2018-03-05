@@ -19,6 +19,17 @@ class Disease < ApplicationRecord
 
   has_and_belongs_to_many :snps
 
+  def as_json(_opts={})
+    {
+        id: self.id,
+        name: self.name,
+        short_form: self.short_form,
+        snps: self.snps.count,
+        created_at: self.created_at,
+        updated_at: self.updated_at
+    }
+  end
+
   def pull_snps
     client = GWAS::Client.new
 

@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+
+<div id="react-root" data-page="disease-show"></div>
+
+<script>
+    window.disease = <%= sanitize @disease.to_json %>;
+</script>
