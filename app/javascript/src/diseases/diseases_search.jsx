@@ -81,7 +81,7 @@ export default class DiseaseSearch extends React.PureComponent {
                                     {disease.name}
                                 </a>
 
-                                <i className="float-right">{disease.snps} SNPs</i>
+                                <i className="pull-right">{disease.snps} SNPs</i>
                             </div>
                         )
                     })}

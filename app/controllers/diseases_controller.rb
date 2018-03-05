@@ -5,7 +5,7 @@ class DiseasesController < ApplicationController
   end
 
   def index
-    data = Rails.cache.fetch("disease_index", expires_in: 12.hours) do
+    data = Rails.cache.fetch("disease_index", expires_in: 24.hours) do
       diseases = Disease.all.eager_load(:snps)
       diseases.as_json({use_length: true})
     end
