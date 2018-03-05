@@ -5,9 +5,12 @@ class DiseasesController < ApplicationController
   end
 
   def index
-    @diseases = Disease.all
+    data = Rails.cache.fetch("disease_index", expires_in: 12.hours) do
+      diseases = Disease.all.eager_load(:snps)
+      diseases.as_json({use_length: true})
+    end
 
-    render json: {diseases: @diseases.as_short_json}
+    render json: {diseases: data}
   end
 
   private

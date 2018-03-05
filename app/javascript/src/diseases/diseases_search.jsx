@@ -66,7 +66,7 @@ export default class DiseaseSearch extends React.PureComponent {
         return (
             <div className="disease-search">
                 <input className="form-control main-search"
-                       placeholder="Search for a disease..."
+                       placeholder={this.state.diseases.length ? "Search for a disease..." : 'Loading diseases for search'}
                        ref="search"
                        onChange={this.onType}
                        value={this.props.query}
@@ -80,6 +80,8 @@ export default class DiseaseSearch extends React.PureComponent {
                                 <a href={link}>
                                     {disease.name}
                                 </a>
+
+                                <i className="float-right">{disease.snps} SNPs</i>
                             </div>
                         )
                     })}
