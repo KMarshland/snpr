@@ -22,7 +22,7 @@ require Rails.root.join('lib', 'gwas', 'gwas.rb')
 
 class Snp < ApplicationRecord
 
-  has_and_belongs_to_many :snps
+  has_and_belongs_to_many :diseases
 
   has_many :genomic_contexts, dependent: :destroy
   has_and_belongs_to_many :sources

@@ -13,6 +13,13 @@ export default function readConfig(store) {
             disease: window.disease
         });
     })();
+    
+    (function getSnp() {
+        store.dispatch({
+            type: 'SET_SNP',
+            snp: window.snp
+        });
+    })();
 
     (function getSources() {
         store.dispatch({

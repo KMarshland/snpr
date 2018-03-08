@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'snps/:rsid' => 'snps#show'
+
   get 'diseases' => 'diseases#index'
   get 'diseases/:short_form' => 'diseases#show'
 

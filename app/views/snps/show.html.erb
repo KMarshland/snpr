@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+
+<div id="react-root" data-page="snp-show"></div>
+
+<script>
+    window.snp = <%= sanitize @snp.to_json %>;
+</script>

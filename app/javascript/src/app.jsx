@@ -11,6 +11,7 @@ import SourcesIndexPage from "./sources/sources_index_page";
 import SourcesShowPage from "./sources/sources_show_page";
 import DiseaseShowPage from "./diseases/diseases_show_page";
 import DiseaseSearch from "./diseases/diseases_search";
+import SnpShowPage from "./snps/snp_show_page";
 
 
 let pages = {
@@ -18,7 +19,8 @@ let pages = {
     'source-index': SourcesIndexPage,
     'source-show': SourcesShowPage,
     'disease-show': DiseaseShowPage,
-    'disease-search': DiseaseSearch
+    'disease-search': DiseaseSearch,
+    'snp-show': SnpShowPage
 };
 
 document.addEventListener('turbolinks:load', () => {
