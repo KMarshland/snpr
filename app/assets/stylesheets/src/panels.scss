@@ -1,4 +1,10 @@
 
 .panel-default {
   background: linear-gradient(45deg, $tertiary-color 0%, $secondary-color 100%);
+
+  .panel-heading {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+  }
 }

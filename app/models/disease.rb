@@ -19,14 +19,15 @@ class Disease < ApplicationRecord
 
   has_and_belongs_to_many :snps
 
-  has_many :sources, through: :snps
+  has_many :sources, -> { distinct }, through: :snps
 
   def as_json(opts={})
     {
         id: self.id,
         name: self.name,
         short_form: self.short_form,
-        snps: opts[:use_length] ? self.snps.length : self.snps.count,
+        snps: opts[:summarize] ? self.snps.length : self.snps,
+        sources: opts[:summarize] ? nil : self.sources,
         created_at: self.created_at,
         updated_at: self.updated_at
     }
