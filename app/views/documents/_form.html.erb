@@ -4,21 +4,21 @@
       <h2><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h2>
 
       <ul>
-      <% document.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% document.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
-    <%= form.label 'External ID' %>
-    <%= form.text_field :external_id, id: :document_external_id, class: 'form-control', placeholder: '5462' %>
+    <%= form.label 'File URL' %>
+    <%= form.text_field :file_url, id: :document_file_url, class: 'form-control', placeholder: 'https://opensnp.org/data/6248.23andme.5462' %>
   </div>
 
   <div class="field">
-    <%= form.label 'File URL' %>
-    <%= form.text_field :file_url, id: :document_file_url, class: 'form-control', placeholder: 'https://opensnp.org/data/6248.23andme.5462' %>
+    <%= form.label 'External ID' %>
+    <%= form.text_field :external_id, id: :document_external_id, class: 'form-control', placeholder: '5462' %>
   </div>
 
   <div class="field">
@@ -30,3 +30,24 @@
     <%= form.submit nil, class: 'btn btn-default' %>
   </div>
 <% end %>
+
+<script>
+    $(document).on('turbolinks:load', function () {
+        var urlInput = $('#document_file_url');
+
+        urlInput.on('paste', function (e) {
+            var url = e.originalEvent.clipboardData.getData('text');
+            var parts = url.split('.');
+
+            var id = parts[parts.length - 1];
+            if (!/^\d+$/.test(id)) {
+                return;
+            }
+
+            var source = parts[parts.length - 2];
+
+            $('#document_external_id').val(id);
+            $('select[name="document[source]"]').val(source)
+        })
+    })
+</script>

@@ -1,5 +1,12 @@
 <p id="notice"><%= notice %></p>
 
+<div class="pull-right">
+  <%= link_to 'New Document', new_document_path, class: 'btn btn-default btn-lg' %>
+</div>
+<br />
+<br />
+<br />
+
 <div id="react-root" data-page="document-show"></div>
 
 <br />
@@ -7,5 +14,5 @@
 <%= link_to 'Back', documents_path %>
 
 <script>
-  window.backend_document = <%= sanitize @document.to_json %>;
+    window.backend_document = <%= sanitize @document.to_json %>;
 </script>
