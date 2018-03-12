@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227034008) do
+ActiveRecord::Schema.define(version: 20180312223043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20180227034008) do
   create_table "snps_sources", id: false, force: :cascade do |t|
     t.bigint "snp_id", null: false
     t.bigint "source_id", null: false
+    t.index ["snp_id"], name: "index_snps_sources_on_snp_id"
     t.index ["source_id"], name: "index_snps_sources_on_source_id"
   end
 

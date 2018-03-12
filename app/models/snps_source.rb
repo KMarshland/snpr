@@ -7,6 +7,7 @@
 #
 # Indexes
 #
+#  index_snps_sources_on_snp_id     (snp_id)
 #  index_snps_sources_on_source_id  (source_id)
 #
 
