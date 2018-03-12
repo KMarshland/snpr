@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import Immutable from 'immutable'
 
 export default class VennDiagram extends React.PureComponent {
 
@@ -19,11 +21,7 @@ export default class VennDiagram extends React.PureComponent {
             return;
         }
 
-        const sets = [
-            {sets: ['A'], size: 12},
-            {sets: ['B'], size: 12},
-            {sets: ['A','B'], size: 2}
-        ];
+        const sets = this.props.sets.toJS();
 
         const chart = venn.VennDiagram();
         d3.select('#' + this.id).datum(sets).call(chart);
@@ -36,4 +34,8 @@ export default class VennDiagram extends React.PureComponent {
     }
 
 }
+
+VennDiagram.propTypes = {
+    sets: PropTypes.instanceOf(Immutable.List).isRequired // should look like [{sets: ['A', 'B'], size: 4}]
+};
 

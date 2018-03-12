@@ -22,15 +22,21 @@ class Disease < ApplicationRecord
   has_many :sources, -> { distinct }, through: :snps
 
   def as_json(opts={})
-    {
+    info = {
         id: self.id,
         name: self.name,
         short_form: self.short_form,
         snps: opts[:summarize] ? self.snps.length : self.snps,
-        sources: opts[:summarize] ? nil : self.sources,
         created_at: self.created_at,
-        updated_at: self.updated_at
+        updated_at: self.updated_at,
     }
+
+    unless opts[:summarize]
+      info[:snps_source] = SnpsSource.where(snp_id: self.snps.map(&:id))
+      info[:sources] = Source.where(id: info[:snps_source].map(&:source_id))
+    end
+
+    info
   end
 
   def as_short_json
