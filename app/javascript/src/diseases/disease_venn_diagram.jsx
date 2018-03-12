@@ -8,7 +8,9 @@ import powerSet from "../helpers/power_set";
 export default class DiseaseVennDiagram extends React.PureComponent {
 
     labeler(d) {
-        return d.names.join(', ') + ': ' + d.size + ' SNPs';
+        return d.names.join(', ') + ': ' +
+            d.size + '/' + this.props.disease.get('snps').length +
+            ' SNPs';
     }
 
     render() {
@@ -75,11 +77,11 @@ export default class DiseaseVennDiagram extends React.PureComponent {
                 size: setSizes[key]
             })
         }
-
+        
         return (
             <VennDiagram
                 sets={Immutable.List(sets)}
-                labeler={this.labeler}
+                labeler={this.labeler.bind(this)}
             />
         )
     }
