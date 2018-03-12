@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from "immutable";
+import DiseaseVennDiagram from "./disease_venn_diagram";
 
 export default class DiseaseSources extends React.PureComponent {
 
@@ -24,6 +25,8 @@ export default class DiseaseSources extends React.PureComponent {
                             )
                         })}
                     </ul>
+
+                    <DiseaseVennDiagram disease={this.props.disease} />
                 </div>
             </div>
         )

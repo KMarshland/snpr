@@ -7,13 +7,17 @@ import powerSet from "../helpers/power_set";
 
 export default class DiseaseVennDiagram extends React.PureComponent {
 
+    labeler(d) {
+        return d.names.join(', ') + ': ' + d.size + ' SNPs';
+    }
+
     render() {
         let sourceNames = {
             0: 'Relevant SNPs'
         };
 
         this.props.disease.get('sources').map(function (source) {
-            sourceNames[source.id] = 'In ' + source.name;
+            sourceNames[source.id] = source.name;
         });
 
         // create a mapping from each snp to an array of the sources that track it
@@ -23,7 +27,11 @@ export default class DiseaseVennDiagram extends React.PureComponent {
             const snp_id = snps_source[i].snp_id;
 
             if (!by_snp[snp_id]) {
-                by_snp[snp_id] = [0];
+                if (this.props.includeOuter) {
+                    by_snp[snp_id] = [0];
+                } else {
+                    by_snp[snp_id] = [];
+                }
             }
 
             by_snp[snp_id].push(snps_source[i].source_id);
@@ -60,19 +68,26 @@ export default class DiseaseVennDiagram extends React.PureComponent {
             });
 
             sets.push({
-                sets: names,
+                sets: names.map(function (name) {
+                    return 'In ' + name
+                }),
+                names: names,
                 size: setSizes[key]
             })
         }
 
         return (
-            <VennDiagram sets={Immutable.List(sets)}/>
+            <VennDiagram
+                sets={Immutable.List(sets)}
+                labeler={this.labeler}
+            />
         )
     }
 
 }
 
 DiseaseVennDiagram.propTypes = {
-    disease: PropTypes.instanceOf(Immutable.Map).isRequired
+    disease: PropTypes.instanceOf(Immutable.Map).isRequired,
+    includeOuter: PropTypes.bool
 };
 
