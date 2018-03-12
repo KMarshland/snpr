@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from "immutable";
-import SummaryRow from "../helpers/summary_row";
 import DiseaseSummary from "./disease_summary";
 import DiseaseSNPs from "./disease_snps";
 import DiseaseSources from "./disease_sources";
+import DiseaseVennDiagram from "./disease_venn_diagram";
 
 export default class DiseaseShowPage extends React.PureComponent {
 
@@ -21,6 +21,8 @@ export default class DiseaseShowPage extends React.PureComponent {
                         <DiseaseSNPs disease={this.props.disease}/>
                     </div>
                 </div>
+
+                <DiseaseVennDiagram disease={this.props.disease} />
             </div>
         )
     }
