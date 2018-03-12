@@ -1,19 +1,30 @@
 
 /*
  * Returns the power set of an array
+ * Does not include the empty set, which is properly part of all power sets
  */
 export default function powerSet(array) {
+    return powerSetIncludingEmptySet(array).filter(function (set) {
+        return set.length > 0;
+    });
+}
 
-    if (array.length <= 1) {
-        return [array];
+/*
+ * Returns the power set of an array
+ */
+function powerSetIncludingEmptySet(array) {
+    if (array.length === 0) {
+        return [
+            []
+        ];
     }
 
     let powerset = [
-        [array[0]]
+        []
     ];
 
     for (let i = 0; i < array.length; i++) {
-        const subPowerSet = powerSet(array.slice(i+1));
+        const subPowerSet = powerSetIncludingEmptySet(array.slice(i+1));
 
         for (let j = 0; j < subPowerSet.length; j++) {
             powerset.push([array[i]].concat(subPowerSet[j]));
@@ -22,22 +33,3 @@ export default function powerSet(array) {
 
     return powerset;
 }
-
-/*
-function (array) {
-    if (array.length <= 1) {
-        return [array];
-    }
-
-    let powerset = [array];
-
-    for (let i = 0; i < array.length; i++) {
-        // the power set of it without that one index
-        const subPowerSet = powerSet(array.slice(0, i).concat(array.slice(i + 1)));
-
-        powerset = powerset.concat(subPowerSet)
-    }
-
-    return powerset;
-}
-*/

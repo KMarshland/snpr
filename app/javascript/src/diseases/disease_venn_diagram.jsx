@@ -13,7 +13,7 @@ export default class DiseaseVennDiagram extends React.PureComponent {
         };
 
         this.props.disease.get('sources').map(function (source) {
-            sourceNames[source.id] = 'Tracked by ' + source.name;
+            sourceNames[source.id] = 'In ' + source.name;
         });
 
         // create a mapping from each snp to an array of the sources that track it
@@ -23,7 +23,7 @@ export default class DiseaseVennDiagram extends React.PureComponent {
             const snp_id = snps_source[i].snp_id;
 
             if (!by_snp[snp_id]) {
-                by_snp[snp_id] = [];
+                by_snp[snp_id] = [0];
             }
 
             by_snp[snp_id].push(snps_source[i].source_id);
