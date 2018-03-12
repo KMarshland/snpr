@@ -9,7 +9,7 @@
 <br />
 <br />
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped documents">
   <thead>
     <tr>
       <th>External ID</th>
@@ -21,7 +21,7 @@
 
   <tbody>
     <% @documents.each do |document| %>
-      <tr>
+      <tr class="<%= document.erroneous ? 'erroneous' : '' %>">
         <td><%= document.external_id %></td>
         <td><%= document.source %></td>
         <td><%= document.imported %></td>

@@ -104,15 +104,17 @@ class Document < ApplicationRecord
         next
       end
 
-      data = line.split("\t").map(&:strip)
+      data = line.split(/\t|,/).map do |datum|
+        datum.strip.gsub(/\A"|"\Z/, '')
+      end
 
-      if header.blank? && data[0] == 'rsid'
-        header = data
+      if header.blank? && data[0].downcase == 'rsid'
+        header = data.map(&:downcase)
         next
       end
 
       params = header.zip(data).to_h.slice(*whitelist)
-
+      
       id = rsids[params['rsid']]
 
       if id
@@ -148,8 +150,16 @@ class Document < ApplicationRecord
         imported: true,
         processing_start_time: nil
     )
+  rescue  Encoding::UndefinedConversionError
+    puts 'Encoding error; deleting cache'
+
+    File.delete(cache_location) if defined? cache_location
+
+    self.update(erroneous: true, processing_start_time: nil)
+
   rescue Exception => e
     self.update(processing_start_time: nil)
+
     raise e
   end
 

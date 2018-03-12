@@ -77,7 +77,7 @@ export default class DiseaseVennDiagram extends React.PureComponent {
                 size: setSizes[key]
             })
         }
-        
+
         return (
             <VennDiagram
                 sets={Immutable.List(sets)}
