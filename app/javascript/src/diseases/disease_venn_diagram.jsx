@@ -30,13 +30,13 @@ export default class DiseaseVennDiagram extends React.PureComponent {
 
             if (!by_snp[snp_id]) {
                 if (this.props.includeOuter) {
-                    by_snp[snp_id] = [0];
+                    by_snp[snp_id] = new Set([0]);
                 } else {
-                    by_snp[snp_id] = [];
+                    by_snp[snp_id] = new Set();
                 }
             }
 
-            by_snp[snp_id].push(snps_source[i].source_id);
+            by_snp[snp_id].add(snps_source[i].source_id);
         }
 
         // Figure out the sizes of each set
@@ -46,7 +46,7 @@ export default class DiseaseVennDiagram extends React.PureComponent {
         for (let snp_id in by_snp) {
             // enumerate the power set of the keys
 
-            const source_variations = powerSet(by_snp[snp_id]);
+            const source_variations = powerSet(Array.from(by_snp[snp_id]));
 
             for (let i = 0; i < source_variations.length; i++) {
                 const source_variation = source_variations[i];

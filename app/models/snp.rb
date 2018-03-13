@@ -22,10 +22,10 @@ require Rails.root.join('lib', 'gwas', 'gwas.rb')
 
 class Snp < ApplicationRecord
 
-  has_and_belongs_to_many :diseases
+  has_and_belongs_to_many :diseases, -> { distinct }
 
   has_many :genomic_contexts, dependent: :destroy
-  has_and_belongs_to_many :sources
+  has_and_belongs_to_many :sources, -> { distinct }
 
   validates :rsid, presence: true
 
