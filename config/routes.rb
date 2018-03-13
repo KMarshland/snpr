@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   get 'snps/:rsid' => 'snps#show'
 
   get 'diseases' => 'diseases#index'

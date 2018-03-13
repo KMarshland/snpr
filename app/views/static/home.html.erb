@@ -1,8 +1,15 @@
 
 <% content_for :white do %>
+  <% if notice.present? %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+  <% if alert.present? %>
+    <p class="alert"><%= alert %></p>
+  <% end %>
+
   <br />
   <p>
-  By using this tool, you acknowledge that it was created for educational purposes, and that the data may or may not be correct. Furthermore, these mutations are likely to account for only a small or negligible portion of your risk. You are strongly encouraged to talk to a doctor or genetic counselor if you have any questions. Finally, by using this tool you agree not to hold its creators liable.
+    By using this tool, you acknowledge that it was created for educational purposes, and that the data may or may not be correct. Furthermore, these mutations are likely to account for only a small or negligible portion of your risk. You are strongly encouraged to talk to a doctor or genetic counselor if you have any questions. Finally, by using this tool you agree not to hold its creators liable.
   </p>
   <br />
 <% end %>

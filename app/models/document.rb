@@ -10,9 +10,11 @@
 #  file_url              :string
 #  imported              :boolean          default(FALSE)
 #  processing_start_time :datetime
+#  erroneous             :boolean          default(FALSE)
 #
 # Indexes
 #
+#  index_documents_on_erroneous    (erroneous)
 #  index_documents_on_external_id  (external_id) UNIQUE
 #  index_documents_on_imported     (imported)
 #  index_documents_on_source_id    (source_id)
@@ -114,7 +116,7 @@ class Document < ApplicationRecord
       end
 
       params = header.zip(data).to_h.slice(*whitelist)
-      
+
       id = rsids[params['rsid']]
 
       if id
