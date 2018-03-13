@@ -117,6 +117,8 @@ class Document < ApplicationRecord
 
       params = header.zip(data).to_h.slice(*whitelist)
 
+      next if params['rsid'].downcase == 'rsid'
+
       id = rsids[params['rsid']]
 
       if id
