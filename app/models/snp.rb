@@ -75,7 +75,7 @@ class Snp < ApplicationRecord
       "(#{keys.map{|key|
         value = param[key]
 
-        "'#{value.to_s.gsub(/["'`]/, '')}'"
+        "'#{value.to_s.gsub(/[^\w\d,-_]/, '')}'"
       }.join(',')},'#{now}','#{now}')"
     end
 

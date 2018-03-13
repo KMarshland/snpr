@@ -66,6 +66,7 @@ class Document < ApplicationRecord
 
     header = nil
     whitelist = %w(rsid chromosome position allele1 allele2)
+    source_name = self.source.name
 
     checked = 0
     created = 0
@@ -99,8 +100,8 @@ class Document < ApplicationRecord
       next if line.blank?
 
       if line.start_with? '#'
-        if header.blank? && line =~ /#\s+(\w+\t){1,5}\w+/
-          header = line.split(/#\s+/).last.split("\t").map(&:strip)
+        if header.blank? && line =~ /#\s+(\w+(\t| {2,})){1,5}\w+/
+          header = line.split(/#\s+/).last.split(/\t| {2,}/).map(&:strip)
         end
 
         next
@@ -115,9 +116,14 @@ class Document < ApplicationRecord
         next
       end
 
+      if header.blank? && data[0] =~ /\Ars\d+\Z/ && source_name == '23andme'
+        header = %w(rsid chromosome position genotype)
+      end
+
       params = header.zip(data).to_h.slice(*whitelist)
 
       next if params['rsid'].downcase == 'rsid'
+      next unless params['rsid'] =~ /rs\d+/
 
       id = rsids[params['rsid']]
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import numberWithCommas from "../helpers/number_with_commas";
 
 export default class SourcesIndexRow extends React.PureComponent {
 
@@ -13,7 +14,7 @@ export default class SourcesIndexRow extends React.PureComponent {
                     </a>
                 </td>
                 <td>{this.props.source.get('documents')}</td>
-                <td>{this.props.source.get('snps')}</td>
+                <td>{numberWithCommas(this.props.source.get('snps'))}</td>
             </tr>
         )
     }
