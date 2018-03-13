@@ -4,30 +4,38 @@
 
 <br />
 
-<%= link_to 'New Document', new_document_path, class: 'btn btn-default btn-lg' %>
+<% if is_admin? %>
+  <%= link_to 'New Document', new_document_path, class: 'btn btn-default btn-lg' %>
 
-<br />
-<br />
+  <br />
+  <br />
+<% end %>
 
 <table class="table table-bordered table-striped documents">
   <thead>
-    <tr>
-      <th>External ID</th>
-      <th>Source</th>
-      <th>Finished import</th>
+  <tr>
+    <th>External ID</th>
+    <th>Source</th>
+    <th>Finished import</th>
+    <th></th>
+    <% if is_admin? %>
       <th></th>
-    </tr>
+    <% end %>
+  </tr>
   </thead>
 
   <tbody>
-    <% @documents.each do |document| %>
-      <tr class="<%= document.erroneous ? 'erroneous' : '' %>">
-        <td><%= document.external_id %></td>
-        <td><%= document.source %></td>
-        <td><%= document.imported %></td>
-        <td><%= link_to 'Show', document %></td>
-      </tr>
-    <% end %>
+  <% @documents.each do |document| %>
+    <tr class="<%= document.erroneous ? 'erroneous' : '' %>">
+      <td><%= document.external_id %></td>
+      <td><%= document.source %></td>
+      <td><%= document.imported %></td>
+      <td><%= link_to 'Show', document %></td>
+      <% if is_admin? %>
+        <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 

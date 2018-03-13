@@ -1,6 +1,7 @@
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
   before_action :set_sources, only: [:show]
+  before_action :requires_admin, except: [:show, :index]
 
   # GET /documents
   # GET /documents.json
