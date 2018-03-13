@@ -1,0 +1,30 @@
+@import "colors";
+
+.nav-tabs {
+  margin-top: 10px;
+  border-color: $secondary-color;
+
+  .nav-link {
+    border: 1px solid $secondary-color;
+  }
+
+  .nav-link.active, .nav-link:hover {
+    background-color: $secondary-color;
+    color: white;
+  }
+
+  .nav-link:hover {
+    border: 1px solid $tertiary-color;
+    border-bottom: none;
+  }
+}
+
+.tab-content {
+  background: linear-gradient(-5deg, $tertiary-color 0%, $secondary-color 100%);
+  border-radius: 0 0 5px 5px;
+  margin-bottom: 10px;
+
+  .tab-pane {
+    padding: 10px;
+  }
+}
