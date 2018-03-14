@@ -25,30 +25,48 @@ let pages = {
 
 document.addEventListener('turbolinks:load', () => {
 
-    const root = document.getElementById('react-root');
+    let roots = [];
 
-    if (!root) {
-        return;
+    const byId = document.getElementById('react-root');
+    if (byId) {
+        roots.push(byId);
     }
 
-    const pageName = root.getAttribute('data-page');
-
-    if (!pageName || !pages[pageName]) {
-        return;
+    const byClass = document.getElementsByClassName('react-root');
+    for (let i = 0; i < byClass.length; i++) {
+        roots.push(byClass[i])
     }
 
-    const page = pages[pageName];
+    if (!roots.length) {
+        return;
+    }
 
     readConfig(store);
 
-    const Connection = connect(function (store) {
-        return store;
-    })(page);
+    for (let i = 0; i < roots.length; i++) {
+        const root = roots[i];
 
-    ReactDOM.render(
-        <Provider store={store}>
-            <Connection />
-        </Provider>,
-        document.getElementById('react-root')
-    );
+        if (!root) {
+            continue;
+        }
+
+        const pageName = root.getAttribute('data-page');
+
+        if (!pageName || !pages[pageName]) {
+            return;
+        }
+
+        const page = pages[pageName];
+
+        const Connection = connect(function (store) {
+            return store;
+        })(page);
+
+        ReactDOM.render(
+            <Provider store={store}>
+                <Connection/>
+            </Provider>,
+            root
+        );
+    }
 });

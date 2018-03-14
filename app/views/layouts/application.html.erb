@@ -30,10 +30,10 @@
     <div id="menu" class="container">
       <ul>
         <%= menu_item 'Home', '/' %>
-        <%= menu_item 'Documents', documents_path %>
-        <%= menu_item 'Sources', sources_path %>
+        <%= menu_item 'Gene sequencing companies', sources_path %>
 
         <% if user_signed_in? %>
+          <%= menu_item 'Documents', documents_path %>
           <%= menu_item 'Sign out', destroy_user_session_path, method: :delete %>
           <% else %>
           <%= menu_item 'Sign in', new_user_session_path %>
